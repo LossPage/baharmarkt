@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konum İste ve Google Maps Bağlantısı Oluştur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #map-link {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="getLocation()">Konum İste</button>
+
+    <div id="map-link">
+        <a id="maps-link" target="_blank" hidden></a>
+    </div>
+
+    <!-- Yeni eklenen textbox -->
+    <label for="map-link-textbox">Google Maps Bağlantısı:</label>
+    <input type="text" id="map-link-textbox" readonly>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Tarayıcınız konum servisini desteklemiyor.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            var mapLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+            
+            document.getElementById("maps-link").href = mapLink;
+            document.getElementById("maps-link").innerText = mapLink;
+            document.getElementById("map-link").style.display = "block";
+
+            // Yeni eklenen textbox'a değeri atama
+            document.getElementById("map-link-textbox").value = mapLink;
+        }
+    </script>
+
+</body>
+</html>
